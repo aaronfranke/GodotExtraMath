@@ -8,9 +8,9 @@ This library adds the following:
 
 * `Vector4` type for various purposes.
 
-* 2.5D types `Basis25D` and `Transform25D` for 2.5D games.
+* Integer vector types `Vector2i`, `Vector3i`, and `Vector4i`.
 
-* Integer vector types (`Vector2i`, `Vector3i`, `Vector4i`).
+* 2.5D types `Basis25D` and `Transform25D` for 2.5D games.
 
 * Double-precision versions of all floating-point types.
 
@@ -18,14 +18,14 @@ This library adds the following:
 
 More things may be added in the future.
 
-To use this library, download it and place in the `addons` folder, call the folder `extra-math-cs`, then add the following lines to your `csproj` file:
+To use this library, download it and place in the `addons` folder, call the folder `extra-math-cs`. Alternatively, add this repository as a submodule. Then add the following lines to your `csproj` file:
 
+    <Compile Include="addons\extra-math-cs\ExtraMath\Basis25D.cs" />
+    <Compile Include="addons\extra-math-cs\ExtraMath\Transform25D.cs" />
     <Compile Include="addons\extra-math-cs\ExtraMath\Vector2i.cs" />
     <Compile Include="addons\extra-math-cs\ExtraMath\Vector3i.cs" />
     <Compile Include="addons\extra-math-cs\ExtraMath\Vector4i.cs" />
     <Compile Include="addons\extra-math-cs\ExtraMath\Vector4.cs" />
-    <Compile Include="addons\extra-math-cs\ExtraMath\Basis25D.cs" />
-    <Compile Include="addons\extra-math-cs\ExtraMath\Transform25D.cs" />
     <Compile Include="addons\extra-math-cs\ExtraMath\Double\AABBd.cs" />
     <Compile Include="addons\extra-math-cs\ExtraMath\Double\Basis25Dd.cs" />
     <Compile Include="addons\extra-math-cs\ExtraMath\Double\Basisd.cs" />
