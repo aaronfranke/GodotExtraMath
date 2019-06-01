@@ -50,6 +50,7 @@ namespace ExtraMath
             }
         }
 
+        // Constructors
         public Transform25D(Transform25D transform25D)
         {
             basis = transform25D.basis;
