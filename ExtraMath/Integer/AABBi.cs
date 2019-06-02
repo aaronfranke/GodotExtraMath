@@ -383,6 +383,7 @@ namespace ExtraMath
             _size = new Vector3i(width, height, depth);
         }
 
+#if GODOT
         public static explicit operator AABBi(Godot.AABB value)
         {
             return new AABBi((Vector3i)value.Position, (Vector3i)value.Size);
@@ -392,6 +393,7 @@ namespace ExtraMath
         {
             return new Godot.AABB(value.Position, value.Size);
         }
+#endif
 
         public static bool operator ==(AABBi left, AABBi right)
         {

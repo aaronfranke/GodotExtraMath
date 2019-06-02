@@ -347,6 +347,7 @@ namespace ExtraMath
             z = v.z;
         }
 
+#if GODOT
         public static explicit operator Godot.Vector3(Vector3d value)
         {
             return new Godot.Vector3((real_t)value.x, (real_t)value.y, (real_t)value.z);
@@ -356,6 +357,17 @@ namespace ExtraMath
         {
             return new Vector3d(value.x, value.y, value.z);
         }
+#elif UNITY_5_3_OR_NEWER
+        public static explicit operator UnityEngine.Vector3(Vector3d value)
+        {
+            return new UnityEngine.Vector3((real_t)value.x, (real_t)value.y, (real_t)value.z);
+        }
+
+        public static implicit operator Vector3d(UnityEngine.Vector3 value)
+        {
+            return new Vector3d(value.x, value.y, value.z);
+        }
+#endif
 
         public static explicit operator Vector3i(Vector3d value)
         {

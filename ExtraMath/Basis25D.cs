@@ -1,4 +1,8 @@
+#if GODOT
 using Godot;
+#elif UNITY_5_3_OR_NEWER
+using UnityEngine;
+#endif
 using System;
 using System.Runtime.InteropServices;
 
@@ -88,12 +92,21 @@ namespace ExtraMath
             }
         }
 
+#if GODOT
         private static readonly Basis25D _topDown = new Basis25D(1, 0, 0, 0, 0, 1);
         private static readonly Basis25D _frontSide = new Basis25D(1, 0, 0, -1, 0, 0);
         private static readonly Basis25D _fortyFive = new Basis25D(1, 0, 0, -0.70710678118f, 0, 0.70710678118f);
         private static readonly Basis25D _isometric = new Basis25D(0.86602540378f, 0.5f, 0, -1, -0.86602540378f, 0.5f);
         private static readonly Basis25D _obliqueY = new Basis25D(1, 0, -1, -1, 0, 1);
         private static readonly Basis25D _obliqueZ = new Basis25D(1, 0, 0, -1, -1, 1);
+#elif UNITY_5_3_OR_NEWER // Compared to Godot, flip x.y, y.y, and z.x.
+        private static readonly Basis25D _topDown = new Basis25D(1, 0, 0, 0, 0, 1);
+        private static readonly Basis25D _frontSide = new Basis25D(1, 0, 0, 1, 0, 0);
+        private static readonly Basis25D _fortyFive = new Basis25D(1, 0, 0, 0.70710678118f, 0, 0.70710678118f);
+        private static readonly Basis25D _isometric = new Basis25D(0.86602540378f, -0.5f, 0, 1, 0.86602540378f, 0.5f);
+        private static readonly Basis25D _obliqueY = new Basis25D(1, 0, -1, 1, 0, 1);
+        private static readonly Basis25D _obliqueZ = new Basis25D(1, 0, 0, 1, 1, 1);
+#endif
 
         public static Basis25D TopDown { get { return _topDown; } }
         public static Basis25D FrontSide { get { return _frontSide; } }
@@ -112,7 +125,11 @@ namespace ExtraMath
         {
             real_t sin = Mathf.Sin(angle);
             real_t cos = Mathf.Cos(angle);
+#if GODOT
             return new Basis25D(sin, -cos, 0, -1, -sin, -cos);
+#elif UNITY_5_3_OR_NEWER
+            return new Basis25D(sin, cos, 0, 1, sin, -cos);
+#endif
         }
 
         // Constructors

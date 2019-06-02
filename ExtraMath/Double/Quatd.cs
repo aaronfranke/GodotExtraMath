@@ -276,6 +276,7 @@ namespace ExtraMath
             }
         }
 
+#if GODOT
         public static explicit operator Godot.Quat(Quatd value)
         {
             return new Godot.Quat((real_t)value.x, (real_t)value.y, (real_t)value.z, (real_t)value.w);
@@ -285,6 +286,20 @@ namespace ExtraMath
         {
             return new Quatd(value.x, value.y, value.z, value.w);
         }
+#elif UNITY_5_3_OR_NEWER
+        // Unity uses a left-handed coordinate system, so we need to be consistent with that for sanity.
+        // Most code in this struct should just expect the "same" handedness and not any particular one.
+        // Buuuuuuuuuuuuuuut... there's PROBABLY something in this file that is completely broken.
+        public static explicit operator UnityEngine.Quaternion(Quatd value)
+        {
+            return new UnityEngine.Quaternion((real_t)value.x, (real_t)value.y, (real_t)value.z, (real_t)value.w);
+        }
+
+        public static implicit operator Quatd(UnityEngine.Quaternion value)
+        {
+            return new Quatd(value.x, value.y, value.z, value.w);
+        }
+#endif
 
         public static Quatd operator *(Quatd left, Quatd right)
         {

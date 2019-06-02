@@ -422,6 +422,7 @@ namespace ExtraMath
             _size = new Vector3d(width, height, depth);
         }
 
+#if GODOT
         public static explicit operator Godot.AABB(AABBd value)
         {
             return new Godot.AABB((Godot.Vector3)value.Position, (Godot.Vector3)value.Size);
@@ -431,6 +432,19 @@ namespace ExtraMath
         {
             return new AABBd(value.Position, value.Size);
         }
+#elif UNITY_5_3_OR_NEWER
+        public static explicit operator UnityEngine.Bounds(AABBd value)
+        {
+            Vector3d size = value.Size;
+            return new UnityEngine.Bounds((UnityEngine.Vector3)(value.Position + size / 2), (UnityEngine.Vector3)size);
+        }
+
+        public static implicit operator AABBd(UnityEngine.Bounds value)
+        {
+            UnityEngine.Vector3 size = value.size;
+            return new AABBd(value.center - size / 2, size); // Unity is missing position for Bounds but has it for Rect...
+        }
+#endif
 
         public static explicit operator AABBi(AABBd value)
         {

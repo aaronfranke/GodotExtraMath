@@ -1,4 +1,8 @@
+#if GODOT
 using Godot;
+#elif UNITY_5_3_OR_NEWER
+using UnityEngine;
+#endif
 using System;
 using System.Runtime.InteropServices;
 
@@ -110,6 +114,7 @@ namespace ExtraMath
             return new Vector4(Mathf.Abs(x), Mathf.Abs(y), Mathf.Abs(z), Mathf.Abs(w));
         }
 
+#if GODOT
         public Basis AxisAngleBasis()
         {
             return new Basis(XYZ, w);
@@ -135,6 +140,7 @@ namespace ExtraMath
         {
             return AxisAngle(b.Quat()); // Might be a more efficient way to do this.
         }
+#endif
 
         public Vector4 Bounce(Vector4 n)
         {
@@ -173,7 +179,11 @@ namespace ExtraMath
         /// </summary>
         public static Vector4 DirMag(Vector3 v)
         {
+#if GODOT
             return new Vector4(v.Normalized(), v.Length());
+#elif UNITY_5_3_OR_NEWER
+            return new Vector4(v.normalized, v.magnitude);
+#endif
         }
 
         /// <summary>
@@ -278,6 +288,7 @@ namespace ExtraMath
             return v;
         }
 
+#if GODOT
         public Vector4 PosMod(real_t mod)
         {
             Vector4 v = this;
@@ -297,6 +308,7 @@ namespace ExtraMath
             v.w = Mathf.PosMod(v.w, modv.w);
             return v;
         }
+#endif
 
         public Vector4 Project(Vector4 onNormal)
         {
@@ -312,6 +324,7 @@ namespace ExtraMath
             return 2.0f * n * Dot(n) - this;
         }
 
+#if GODOT
         /// <summary>
         /// Rotates the given Basis, interpreting this Vector4 as AxisAngle.
         /// </summary>
@@ -319,6 +332,7 @@ namespace ExtraMath
         {
             return b * new Basis(XYZ, w);
         }
+#endif
 
         public Vector4 Round()
         {
@@ -340,6 +354,7 @@ namespace ExtraMath
             return this - n * Dot(n);
         }
 
+#if GODOT
         public Vector4 Snapped(Vector4 by)
         {
             return new Vector4
@@ -350,6 +365,7 @@ namespace ExtraMath
                 Mathf.Stepify(w, by.w)
             );
         }
+#endif
 
         public Vector2[] UnpackVector2()
         {
@@ -369,7 +385,11 @@ namespace ExtraMath
         private static readonly Vector4 _zero = new Vector4(0, 0, 0, 0);
         private static readonly Vector4 _one = new Vector4(1, 1, 1, 1);
         private static readonly Vector4 _negOne = new Vector4(-1, -1, -1, -1);
+#if GODOT
         private static readonly Vector4 _inf = new Vector4(Mathf.Inf, Mathf.Inf, Mathf.Inf, Mathf.Inf);
+#elif UNITY_5_3_OR_NEWER
+        private static readonly Vector4 _inf = new Vector4(real_t.PositiveInfinity, real_t.PositiveInfinity, real_t.PositiveInfinity, real_t.PositiveInfinity);
+#endif
 
         private static readonly Vector4 _unitX = new Vector4(1, 0, 0, 0);
         private static readonly Vector4 _unitY = new Vector4(0, 1, 0, 0);
@@ -415,6 +435,18 @@ namespace ExtraMath
             z = zw.x;
             w = zw.y;
         }
+
+#if UNITY_5_3_OR_NEWER
+        public static implicit operator UnityEngine.Vector4(Vector4 value)
+        {
+            return new UnityEngine.Vector4(value.x, value.y, value.z, value.w);
+        }
+
+        public static explicit operator Vector4(UnityEngine.Vector4 value)
+        {
+            return new Vector4(value.x, value.y, value.z, value.w);
+        }
+#endif
 
         public static Vector4 operator +(Vector4 left, Vector4 right)
         {
@@ -518,6 +550,7 @@ namespace ExtraMath
 
         public static bool operator <(Vector4 left, Vector4 right)
         {
+#if GODOT
             if (Mathf.IsEqualApprox(left.x, right.x))
             {
                 if (Mathf.IsEqualApprox(left.y, right.y))
@@ -530,11 +563,26 @@ namespace ExtraMath
                 }
                 return left.y < right.y;
             }
+#elif UNITY_5_3_OR_NEWER
+            if (Mathf.Approximately(left.x, right.x))
+            {
+                if (Mathf.Approximately(left.y, right.y))
+                {
+                    if (Mathf.Approximately(left.z, right.z))
+                    {
+                        return left.w < right.w;
+                    }
+                    return left.z < right.z;
+                }
+                return left.y < right.y;
+            }
+#endif
             return left.x < right.x;
         }
 
         public static bool operator >(Vector4 left, Vector4 right)
         {
+#if GODOT
             if (Mathf.IsEqualApprox(left.x, right.x))
             {
                 if (Mathf.IsEqualApprox(left.y, right.y))
@@ -547,11 +595,26 @@ namespace ExtraMath
                 }
                 return left.y > right.y;
             }
+#elif UNITY_5_3_OR_NEWER
+            if (Mathf.Approximately(left.x, right.x))
+            {
+                if (Mathf.Approximately(left.y, right.y))
+                {
+                    if (Mathf.Approximately(left.z, right.z))
+                    {
+                        return left.w > right.w;
+                    }
+                    return left.z > right.z;
+                }
+                return left.y > right.y;
+            }
+#endif
             return left.x > right.x;
         }
 
         public static bool operator <=(Vector4 left, Vector4 right)
         {
+#if GODOT
             if (Mathf.IsEqualApprox(left.x, right.x))
             {
                 if (Mathf.IsEqualApprox(left.y, right.y))
@@ -564,11 +627,26 @@ namespace ExtraMath
                 }
                 return left.y < right.y;
             }
+#elif UNITY_5_3_OR_NEWER
+            if (Mathf.Approximately(left.x, right.x))
+            {
+                if (Mathf.Approximately(left.y, right.y))
+                {
+                    if (Mathf.Approximately(left.z, right.z))
+                    {
+                        return left.w <= right.w;
+                    }
+                    return left.z < right.z;
+                }
+                return left.y < right.y;
+            }
+#endif
             return left.x < right.x;
         }
 
         public static bool operator >=(Vector4 left, Vector4 right)
         {
+#if GODOT
             if (Mathf.IsEqualApprox(left.x, right.x))
             {
                 if (Mathf.IsEqualApprox(left.y, right.y))
@@ -581,6 +659,20 @@ namespace ExtraMath
                 }
                 return left.y > right.y;
             }
+#elif UNITY_5_3_OR_NEWER
+            if (Mathf.Approximately(left.x, right.x))
+            {
+                if (Mathf.Approximately(left.y, right.y))
+                {
+                    if (Mathf.Approximately(left.z, right.z))
+                    {
+                        return left.w >= right.w;
+                    }
+                    return left.z > right.z;
+                }
+                return left.y > right.y;
+            }
+#endif
             return left.x > right.x;
         }
 
@@ -596,7 +688,11 @@ namespace ExtraMath
 
         public bool Equals(Vector4 other)
         {
+#if GODOT
             return Mathf.IsEqualApprox(x, other.x) && Mathf.IsEqualApprox(y, other.y) && Mathf.IsEqualApprox(z, other.z) && Mathf.IsEqualApprox(w, other.w);
+#elif UNITY_5_3_OR_NEWER
+            return Mathf.Approximately(x, other.x) && Mathf.Approximately(y, other.y) && Mathf.Approximately(z, other.z) && Mathf.Approximately(w, other.w);
+#endif
         }
 
         public override int GetHashCode()

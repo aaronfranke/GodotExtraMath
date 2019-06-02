@@ -78,7 +78,11 @@ namespace ExtraMath
 
         public static explicit operator Transform25D(Transform25Dd value)
         {
+#if GODOT
             return new Transform25D((Basis25D)value.basis, (Godot.Vector3)value.spatialPosition);
+#elif UNITY_5_3_OR_NEWER
+            return new Transform25D((Basis25D)value.basis, (UnityEngine.Vector3)value.spatialPosition);
+#endif
         }
 
         public static implicit operator Transform25Dd(Transform25D value)

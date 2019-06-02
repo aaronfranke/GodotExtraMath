@@ -613,6 +613,7 @@ namespace ExtraMath
             Row2 = new Vector3d(xz, yz, zz);
         }
 
+#if GODOT
         public static explicit operator Godot.Basis(Basisd value)
         {
             return new Godot.Basis((Godot.Vector3)value.x, (Godot.Vector3)value.y, (Godot.Vector3)value.z);
@@ -622,6 +623,7 @@ namespace ExtraMath
         {
             return new Basisd(value.x, value.y, value.z);
         }
+#endif
 
         public static Basisd operator *(Basisd left, Basisd right)
         {

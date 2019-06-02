@@ -1,4 +1,8 @@
+#if GODOT
 using Godot;
+#elif UNITY_5_3_OR_NEWER
+using UnityEngine;
+#endif
 using System;
 using System.Runtime.InteropServices;
 
@@ -25,6 +29,7 @@ namespace ExtraMath
 
         // Public properties calculate on-the-fly.
 
+#if GODOT
         /// <summary>
         /// The 2D transformation of this object. Slower than FlatPosition.
         /// </summary>
@@ -35,6 +40,7 @@ namespace ExtraMath
                 return new Transform2D(0, FlatPosition);
             }
         }
+#endif
 
         /// <summary>
         /// The 2D position of this object.
@@ -59,7 +65,7 @@ namespace ExtraMath
         public Transform25D(Basis25D basis25D)
         {
             basis = basis25D;
-            spatialPosition = Vector3.Zero;
+            spatialPosition = new Vector3(); // Godot has "Zero", Unity has "zero", but both have parameterless constructors.
         }
         public Transform25D(Basis25D basis25D, Vector3 position3D)
         {
@@ -69,7 +75,7 @@ namespace ExtraMath
         public Transform25D(Vector2 xAxis, Vector2 yAxis, Vector2 zAxis)
         {
             basis = new Basis25D(xAxis, yAxis, zAxis);
-            spatialPosition = Vector3.Zero;
+            spatialPosition = new Vector3(); // Godot has "Zero", Unity has "zero", but both have parameterless constructors.
         }
         public Transform25D(Vector2 xAxis, Vector2 yAxis, Vector2 zAxis, Vector3 position3D)
         {

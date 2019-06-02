@@ -118,6 +118,7 @@ namespace ExtraMath
             return g;
         }
 
+#if GODOT
         public Rect2d GrowMargin(Godot.Margin margin, double by)
         {
             var g = this;
@@ -129,6 +130,7 @@ namespace ExtraMath
 
             return g;
         }
+#endif
 
         public bool HasNoArea()
         {
@@ -201,6 +203,7 @@ namespace ExtraMath
             _size = new Vector2d(width, height);
         }
 
+#if GODOT
         public static explicit operator Godot.Rect2(Rect2d value)
         {
             return new Godot.Rect2((Godot.Vector2)value.Position, (Godot.Vector2)value.Size);
@@ -210,6 +213,17 @@ namespace ExtraMath
         {
             return new Rect2d(value.Position, value.Size);
         }
+#elif UNITY_5_3_OR_NEWER
+        public static explicit operator UnityEngine.Rect(Rect2d value)
+        {
+            return new UnityEngine.Rect((UnityEngine.Vector2)value.Position, (UnityEngine.Vector2)value.Size);
+        }
+
+        public static implicit operator Rect2d(UnityEngine.Rect value)
+        {
+            return new Rect2d(value.position, value.size);
+        }
+#endif
 
         public static explicit operator Rect2i(Rect2d value)
         {

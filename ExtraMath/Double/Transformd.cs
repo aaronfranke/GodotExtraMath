@@ -218,6 +218,7 @@ namespace ExtraMath
             this.origin = origin;
         }
 
+#if GODOT
         public static explicit operator Godot.Transform(Transformd value)
         {
             return new Godot.Transform((Godot.Basis)value.basis, (Godot.Vector3)value.origin);
@@ -227,6 +228,29 @@ namespace ExtraMath
         {
             return new Transformd(value.basis, value.origin);
         }
+#elif UNITY_5_3_OR_NEWER
+        // Transform in Unity is a component, not a struct.
+        // Operators are not possible, so put methods here instead.
+        // Use "Apply" and "Store" instead of "Set" and "Get" to be unambiguous.
+        /// <summary>
+        /// Applies the values of this Transformd struct to the given Transform. Note: Very inefficient.
+        /// </summary>
+        public void ApplyTransform(UnityEngine.Transform transform)
+        {
+            transform.localPosition = (UnityEngine.Vector3)origin;
+            transform.localRotation = (UnityEngine.Quaternion)basis.Quat();
+        }
+
+        /// <summary>
+        /// Stores the values of the given Transform in a Transformd struct. Note: Very inefficient.
+        /// </summary>
+        public static Transformd StoreTransform(UnityEngine.Transform transform)
+        {
+            Quatd rotation = transform.localRotation;
+            Vector3d position = transform.localPosition;
+            return new Transformd(rotation, position);
+        }
+#endif
 
         public static Transformd operator *(Transformd left, Transformd right)
         {

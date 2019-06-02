@@ -1,4 +1,8 @@
+#if GODOT
 using Godot;
+#elif UNITY_5_3_OR_NEWER
+using UnityEngine;
+#endif
 using System;
 using System.Runtime.InteropServices;
 
@@ -202,6 +206,7 @@ namespace ExtraMath
             _size = new Vector2i(width, height);
         }
 
+#if GODOT
         public static explicit operator Rect2i(Godot.Rect2 value)
         {
             return new Rect2i((Vector2i)value.Position, (Vector2i)value.Size);
@@ -211,6 +216,7 @@ namespace ExtraMath
         {
             return new Godot.Rect2(value.Position, value.Size);
         }
+#endif
 
         public static bool operator ==(Rect2i left, Rect2i right)
         {

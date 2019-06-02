@@ -1,4 +1,8 @@
+#if GODOT
 using Godot;
+#elif UNITY_5_3_OR_NEWER
+using UnityEngine;
+#endif
 using System;
 using System.Runtime.InteropServices;
 
@@ -111,6 +115,7 @@ namespace ExtraMath
             return x < y ? Axis.X : Axis.Y;
         }
 
+#if GODOT
         public Vector2i PosMod(int mod)
         {
             Vector2i v = this;
@@ -126,12 +131,18 @@ namespace ExtraMath
             v.y = Mathf.PosMod(v.y, modv.y);
             return v;
         }
+#endif
 
         public Vector2i Sign()
         {
             Vector2i v = this;
+#if GODOT
             v.x = Mathf.Sign(v.x);
             v.y = Mathf.Sign(v.y);
+#else
+            v.x = v.x < 0 ? -1 : 1;
+            v.y = v.y < 0 ? -1 : 1;
+#endif
             return v;
         }
 
@@ -185,6 +196,18 @@ namespace ExtraMath
         {
             return new Vector2i(value);
         }
+
+#if UNITY_5_3_OR_NEWER
+        public static implicit operator Vector2Int(Vector2i value)
+        {
+            return new Vector2Int(value.x, value.y);
+        }
+
+        public static explicit operator Vector2i(Vector2Int value)
+        {
+            return new Vector2i(value);
+        }
+#endif
 
         public static Vector2i operator +(Vector2i left, Vector2i right)
         {

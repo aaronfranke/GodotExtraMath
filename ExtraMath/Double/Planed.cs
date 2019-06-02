@@ -178,6 +178,7 @@ namespace ExtraMath
             D = _normal.Dot(v1);
         }
 
+#if GODOT
         public static explicit operator Godot.Plane(Planed value)
         {
             return new Godot.Plane((Godot.Vector3)value.Normal, (real_t)value.D);
@@ -187,6 +188,17 @@ namespace ExtraMath
         {
             return new Planed(value.Normal, value.D);
         }
+#elif UNITY_5_3_OR_NEWER
+        public static explicit operator UnityEngine.Plane(Planed value)
+        {
+            return new UnityEngine.Plane((UnityEngine.Vector3)value.Normal, (real_t)value.D);
+        }
+
+        public static implicit operator Planed(UnityEngine.Plane value)
+        {
+            return new Planed(value.normal, value.distance);
+        }
+#endif
 
         public static Planed operator -(Planed Planed)
         {

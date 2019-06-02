@@ -301,6 +301,7 @@ namespace ExtraMath
             origin = pos;
         }
 
+#if GODOT
         public static explicit operator Godot.Transform2D(Transform2Dd value)
         {
             return new Godot.Transform2D((Godot.Vector2)value.x, (Godot.Vector2)value.y, (Godot.Vector2)value.origin);
@@ -310,6 +311,30 @@ namespace ExtraMath
         {
             return new Transform2Dd(value.x, value.y, value.origin);
         }
+#elif UNITY_5_3_OR_NEWER
+        // Transform in Unity is a component, not a struct.
+        // Operators are not possible, so put methods here instead.
+        // Use "Apply" and "Store" instead of "Set" and "Get" to be unambiguous.
+        /// <summary>
+        /// Applies the values of this Transform2Dd struct to the given Transform.
+        /// </summary>
+        public void ApplyTransform(UnityEngine.Transform transform)
+        {
+            transform.localPosition = new UnityEngine.Vector3((float)origin.x, (float)origin.y);
+            transform.eulerAngles = UnityEngine.Vector3.forward * (float)Rotation;
+        }
+
+        /// <summary>
+        /// Stores the values of the given Transform in a Transform2Dd struct.
+        /// </summary>
+        public static Transform2Dd StoreTransform(UnityEngine.Transform transform)
+        {
+            double rotation = transform.eulerAngles.z;
+            Vector3d localPos = transform.localPosition;
+            Vector2d position = new Vector2d(localPos.x, localPos.y);
+            return new Transform2Dd(rotation, position);
+        }
+#endif
 
         public static Transform2Dd operator *(Transform2Dd left, Transform2Dd right)
         {

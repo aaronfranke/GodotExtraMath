@@ -129,7 +129,11 @@ namespace ExtraMath
 
         public static explicit operator Basis25D(Basis25Dd value)
         {
+#if GODOT
             return new Basis25D((Godot.Vector2)value.x, (Godot.Vector2)value.y, (Godot.Vector2)value.z);
+#elif UNITY_5_3_OR_NEWER
+            return new Basis25D((UnityEngine.Vector2)value.x, (UnityEngine.Vector2)value.y, (UnityEngine.Vector2)value.z);
+#endif
         }
 
         public static implicit operator Basis25Dd(Basis25D value)

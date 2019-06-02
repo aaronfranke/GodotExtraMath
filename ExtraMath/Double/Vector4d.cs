@@ -429,6 +429,18 @@ namespace ExtraMath
             return new Vector4d(value.x, value.y, value.z, value.w);
         }
 
+#if UNITY_5_3_OR_NEWER
+        public static explicit operator UnityEngine.Vector4(Vector4d value)
+        {
+            return new Vector4((real_t)value.x, (real_t)value.y, (real_t)value.z, (real_t)value.w);
+        }
+
+        public static implicit operator Vector4d(UnityEngine.Vector4 value)
+        {
+            return new Vector4d(value.x, value.y, value.z, value.w);
+        }
+#endif
+
         public static Vector4d operator +(Vector4d left, Vector4d right)
         {
             left.x += right.x;
