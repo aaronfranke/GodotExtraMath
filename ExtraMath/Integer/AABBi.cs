@@ -5,35 +5,35 @@ namespace ExtraMath
 {
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct AABBd : IEquatable<AABBd>
+    public struct AABBi : IEquatable<AABBi>
     {
-        private Vector3d _position;
-        private Vector3d _size;
+        private Vector3i _position;
+        private Vector3i _size;
 
-        public Vector3d Position
+        public Vector3i Position
         {
             get { return _position; }
             set { _position = value; }
         }
 
-        public Vector3d Size
+        public Vector3i Size
         {
             get { return _size; }
             set { _size = value; }
         }
 
-        public Vector3d End
+        public Vector3i End
         {
             get { return _position + _size; }
             set { _size = value - _position; }
         }
 
-        public bool Encloses(AABBd with)
+        public bool Encloses(AABBi with)
         {
-            Vector3d src_min = _position;
-            Vector3d src_max = _position + _size;
-            Vector3d dst_min = with._position;
-            Vector3d dst_max = with._position + with._size;
+            Vector3i src_min = _position;
+            Vector3i src_max = _position + _size;
+            Vector3i dst_min = with._position;
+            Vector3i dst_max = with._position + with._size;
 
             return src_min.x <= dst_min.x &&
                    src_max.x > dst_max.x &&
@@ -43,10 +43,10 @@ namespace ExtraMath
                    src_max.z > dst_max.z;
         }
 
-        public AABBd Expand(Vector3d point)
+        public AABBi Expand(Vector3i point)
         {
-            Vector3d begin = _position;
-            Vector3d end = _position + _size;
+            Vector3i begin = _position;
+            Vector3i end = _position + _size;
 
             if (point.x < begin.x)
                 begin.x = point.x;
@@ -62,80 +62,80 @@ namespace ExtraMath
             if (point.z > end.z)
                 end.z = point.z;
 
-            return new AABBd(begin, end - begin);
+            return new AABBi(begin, end - begin);
         }
 
-        public double GetArea()
+        public int GetArea()
         {
             return _size.x * _size.y * _size.z;
         }
 
-        public Vector3d GetEndpoint(int idx)
+        public Vector3i GetEndpoint(int idx)
         {
             switch (idx)
             {
                 case 0:
-                    return new Vector3d(_position.x, _position.y, _position.z);
+                    return new Vector3i(_position.x, _position.y, _position.z);
                 case 1:
-                    return new Vector3d(_position.x, _position.y, _position.z + _size.z);
+                    return new Vector3i(_position.x, _position.y, _position.z + _size.z);
                 case 2:
-                    return new Vector3d(_position.x, _position.y + _size.y, _position.z);
+                    return new Vector3i(_position.x, _position.y + _size.y, _position.z);
                 case 3:
-                    return new Vector3d(_position.x, _position.y + _size.y, _position.z + _size.z);
+                    return new Vector3i(_position.x, _position.y + _size.y, _position.z + _size.z);
                 case 4:
-                    return new Vector3d(_position.x + _size.x, _position.y, _position.z);
+                    return new Vector3i(_position.x + _size.x, _position.y, _position.z);
                 case 5:
-                    return new Vector3d(_position.x + _size.x, _position.y, _position.z + _size.z);
+                    return new Vector3i(_position.x + _size.x, _position.y, _position.z + _size.z);
                 case 6:
-                    return new Vector3d(_position.x + _size.x, _position.y + _size.y, _position.z);
+                    return new Vector3i(_position.x + _size.x, _position.y + _size.y, _position.z);
                 case 7:
-                    return new Vector3d(_position.x + _size.x, _position.y + _size.y, _position.z + _size.z);
+                    return new Vector3i(_position.x + _size.x, _position.y + _size.y, _position.z + _size.z);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(idx), String.Format("Index is {0}, but a value from 0 to 7 is expected.", idx));
             }
         }
 
-        public Vector3d GetLongestAxis()
+        public Vector3i GetLongestAxis()
         {
-            var axis = new Vector3d(1, 0, 0);
-            double max_size = _size.x;
+            var axis = new Vector3i(1, 0, 0);
+            int max_size = _size.x;
 
             if (_size.y > max_size)
             {
-                axis = new Vector3d(0, 1, 0);
+                axis = new Vector3i(0, 1, 0);
                 max_size = _size.y;
             }
 
             if (_size.z > max_size)
             {
-                axis = new Vector3d(0, 0, 1);
+                axis = new Vector3i(0, 0, 1);
             }
 
             return axis;
         }
 
-        public Vector3d.Axis GetLongestAxisIndex()
+        public Vector3i.Axis GetLongestAxisIndex()
         {
-            var axis = Vector3d.Axis.X;
-            double max_size = _size.x;
+            var axis = Vector3i.Axis.X;
+            int max_size = _size.x;
 
             if (_size.y > max_size)
             {
-                axis = Vector3d.Axis.Y;
+                axis = Vector3i.Axis.Y;
                 max_size = _size.y;
             }
 
             if (_size.z > max_size)
             {
-                axis = Vector3d.Axis.Z;
+                axis = Vector3i.Axis.Z;
             }
 
             return axis;
         }
 
-        public double GetLongestAxisSize()
+        public int GetLongestAxisSize()
         {
-            double max_size = _size.x;
+            int max_size = _size.x;
 
             if (_size.y > max_size)
                 max_size = _size.y;
@@ -146,47 +146,47 @@ namespace ExtraMath
             return max_size;
         }
 
-        public Vector3d GetShortestAxis()
+        public Vector3i GetShortestAxis()
         {
-            var axis = new Vector3d(1, 0, 0);
-            double max_size = _size.x;
+            var axis = new Vector3i(1, 0, 0);
+            int max_size = _size.x;
 
             if (_size.y < max_size)
             {
-                axis = new Vector3d(0, 1, 0);
+                axis = new Vector3i(0, 1, 0);
                 max_size = _size.y;
             }
 
             if (_size.z < max_size)
             {
-                axis = new Vector3d(0, 0, 1);
+                axis = new Vector3i(0, 0, 1);
             }
 
             return axis;
         }
 
-        public Vector3d.Axis GetShortestAxisIndex()
+        public Vector3i.Axis GetShortestAxisIndex()
         {
-            var axis = Vector3d.Axis.X;
-            double max_size = _size.x;
+            var axis = Vector3i.Axis.X;
+            int max_size = _size.x;
 
             if (_size.y < max_size)
             {
-                axis = Vector3d.Axis.Y;
+                axis = Vector3i.Axis.Y;
                 max_size = _size.y;
             }
 
             if (_size.z < max_size)
             {
-                axis = Vector3d.Axis.Z;
+                axis = Vector3i.Axis.Z;
             }
 
             return axis;
         }
 
-        public double GetShortestAxisSize()
+        public int GetShortestAxisSize()
         {
-            double max_size = _size.x;
+            int max_size = _size.x;
 
             if (_size.y < max_size)
                 max_size = _size.y;
@@ -197,27 +197,16 @@ namespace ExtraMath
             return max_size;
         }
 
-        public Vector3d GetSupport(Vector3d dir)
-        {
-            Vector3d half_extents = _size * 0.5;
-            Vector3d os = _position + half_extents;
-
-            return os + new Vector3d(
-                dir.x > 0 ? -half_extents.x : half_extents.x,
-                dir.y > 0 ? -half_extents.y : half_extents.y,
-                dir.z > 0 ? -half_extents.z : half_extents.z);
-        }
-
-        public AABBd Grow(double by)
+        public AABBi Grow(int by)
         {
             var res = this;
 
             res._position.x -= by;
             res._position.y -= by;
             res._position.z -= by;
-            res._size.x += 2.0 * by;
-            res._size.y += 2.0 * by;
-            res._size.z += 2.0 * by;
+            res._size.x += 2 * by;
+            res._size.y += 2 * by;
+            res._size.z += 2 * by;
 
             return res;
         }
@@ -232,7 +221,7 @@ namespace ExtraMath
             return _size.x <= 0 && _size.y <= 0 && _size.z <= 0;
         }
 
-        public bool HasPoint(Vector3d point)
+        public bool HasPoint(Vector3i point)
         {
             if (point.x < _position.x)
                 return false;
@@ -250,18 +239,18 @@ namespace ExtraMath
             return true;
         }
 
-        public AABBd Intersection(AABBd with)
+        public AABBi Intersection(AABBi with)
         {
-            Vector3d src_min = _position;
-            Vector3d src_max = _position + _size;
-            Vector3d dst_min = with._position;
-            Vector3d dst_max = with._position + with._size;
+            Vector3i src_min = _position;
+            Vector3i src_max = _position + _size;
+            Vector3i dst_min = with._position;
+            Vector3i dst_max = with._position + with._size;
 
-            Vector3d min, max;
+            Vector3i min, max;
 
             if (src_min.x > dst_max.x || src_max.x < dst_min.x)
             {
-                return new AABBd();
+                return new AABBi();
             }
 
             min.x = src_min.x > dst_min.x ? src_min.x : dst_min.x;
@@ -269,7 +258,7 @@ namespace ExtraMath
 
             if (src_min.y > dst_max.y || src_max.y < dst_min.y)
             {
-                return new AABBd();
+                return new AABBi();
             }
 
             min.y = src_min.y > dst_min.y ? src_min.y : dst_min.y;
@@ -277,16 +266,16 @@ namespace ExtraMath
 
             if (src_min.z > dst_max.z || src_max.z < dst_min.z)
             {
-                return new AABBd();
+                return new AABBi();
             }
 
             min.z = src_min.z > dst_min.z ? src_min.z : dst_min.z;
             max.z = src_max.z < dst_max.z ? src_max.z : dst_max.z;
 
-            return new AABBd(min, max - min);
+            return new AABBi(min, max - min);
         }
 
-        public bool Intersects(AABBd with)
+        public bool Intersects(AABBi with)
         {
             if (_position.x >= with._position.x + with._size.x)
                 return false;
@@ -304,53 +293,25 @@ namespace ExtraMath
             return true;
         }
 
-        public bool IntersectsPlane(Planed plane)
+        public bool IntersectsSegment(Vector3i from, Vector3i to)
         {
-            Vector3d[] points =
-            {
-                new Vector3d(_position.x, _position.y, _position.z),
-                new Vector3d(_position.x, _position.y, _position.z + _size.z),
-                new Vector3d(_position.x, _position.y + _size.y, _position.z),
-                new Vector3d(_position.x, _position.y + _size.y, _position.z + _size.z),
-                new Vector3d(_position.x + _size.x, _position.y, _position.z),
-                new Vector3d(_position.x + _size.x, _position.y, _position.z + _size.z),
-                new Vector3d(_position.x + _size.x, _position.y + _size.y, _position.z),
-                new Vector3d(_position.x + _size.x, _position.y + _size.y, _position.z + _size.z)
-            };
-
-            bool over = false;
-            bool under = false;
-
-            for (int i = 0; i < 8; i++)
-            {
-                if (plane.DistanceTo(points[i]) > 0)
-                    over = true;
-                else
-                    under = true;
-            }
-
-            return under && over;
-        }
-
-        public bool IntersectsSegment(Vector3d from, Vector3d to)
-        {
-            double min = 0;
-            double max = 1;
+            int min = 0;
+            int max = 1;
 
             for (int i = 0; i < 3; i++)
             {
-                double segFrom = from[i];
-                double segTo = to[i];
-                double boxBegin = _position[i];
-                double boxEnd = boxBegin + _size[i];
-                double cmin, cmax;
+                int segFrom = from[i];
+                int segTo = to[i];
+                int boxBegin = _position[i];
+                int boxEnd = boxBegin + _size[i];
+                int cmin, cmax;
 
                 if (segFrom < segTo)
                 {
                     if (segFrom > boxEnd || segTo < boxBegin)
                         return false;
 
-                    double length = segTo - segFrom;
+                    int length = segTo - segFrom;
                     cmin = segFrom < boxBegin ? (boxBegin - segFrom) / length : 0;
                     cmax = segTo > boxEnd ? (boxEnd - segFrom) / length : 1;
                 }
@@ -359,7 +320,7 @@ namespace ExtraMath
                     if (segTo > boxEnd || segFrom < boxBegin)
                         return false;
 
-                    double length = segTo - segFrom;
+                    int length = segTo - segFrom;
                     cmin = segFrom > boxEnd ? (boxEnd - segFrom) / length : 0;
                     cmax = segTo < boxBegin ? (boxBegin - segFrom) / length : 1;
                 }
@@ -378,91 +339,81 @@ namespace ExtraMath
             return true;
         }
 
-        public AABBd Merge(AABBd with)
+        public AABBi Merge(AABBi with)
         {
-            Vector3d beg1 = _position;
-            Vector3d beg2 = with._position;
-            var end1 = new Vector3d(_size.x, _size.y, _size.z) + beg1;
-            var end2 = new Vector3d(with._size.x, with._size.y, with._size.z) + beg2;
+            Vector3i beg1 = _position;
+            Vector3i beg2 = with._position;
+            var end1 = new Vector3i(_size.x, _size.y, _size.z) + beg1;
+            var end2 = new Vector3i(with._size.x, with._size.y, with._size.z) + beg2;
 
-            var min = new Vector3d(
+            var min = new Vector3i(
                               beg1.x < beg2.x ? beg1.x : beg2.x,
                               beg1.y < beg2.y ? beg1.y : beg2.y,
                               beg1.z < beg2.z ? beg1.z : beg2.z
                           );
 
-            var max = new Vector3d(
+            var max = new Vector3i(
                               end1.x > end2.x ? end1.x : end2.x,
                               end1.y > end2.y ? end1.y : end2.y,
                               end1.z > end2.z ? end1.z : end2.z
                           );
 
-            return new AABBd(min, max - min);
+            return new AABBi(min, max - min);
         }
 
         // Constructors
-        public AABBd(Vector3d position, Vector3d size)
+        public AABBi(Vector3i position, Vector3i size)
         {
             _position = position;
             _size = size;
         }
-        public AABBd(Vector3d position, double width, double height, double depth)
+        public AABBi(Vector3i position, int width, int height, int depth)
         {
             _position = position;
-            _size = new Vector3d(width, height, depth);
+            _size = new Vector3i(width, height, depth);
         }
-        public AABBd(double x, double y, double z, Vector3d size)
+        public AABBi(int x, int y, int z, Vector3i size)
         {
-            _position = new Vector3d(x, y, z);
+            _position = new Vector3i(x, y, z);
             _size = size;
         }
-        public AABBd(double x, double y, double z, double width, double height, double depth)
+        public AABBi(int x, int y, int z, int width, int height, int depth)
         {
-            _position = new Vector3d(x, y, z);
-            _size = new Vector3d(width, height, depth);
+            _position = new Vector3i(x, y, z);
+            _size = new Vector3i(width, height, depth);
         }
 
-        public static explicit operator Godot.AABB(AABBd value)
-        {
-            return new Godot.AABB((Godot.Vector3)value.Position, (Godot.Vector3)value.Size);
-        }
-
-        public static implicit operator AABBd(Godot.AABB value)
-        {
-            return new AABBd(value.Position, value.Size);
-        }
-
-        public static explicit operator AABBi(AABBd value)
+        public static explicit operator AABBi(Godot.AABB value)
         {
             return new AABBi((Vector3i)value.Position, (Vector3i)value.Size);
         }
 
-        public static implicit operator AABBd(AABBi value)
+        public static implicit operator Godot.AABB(AABBi value)
         {
-            return new AABBd(value.Position, value.Size);
+            return new Godot.AABB(value.Position, value.Size);
         }
 
-        public static bool operator ==(AABBd left, AABBd right)
+        public static bool operator ==(AABBi left, AABBi right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(AABBd left, AABBd right)
+        public static bool operator !=(AABBi left, AABBi right)
         {
             return !left.Equals(right);
         }
 
         public override bool Equals(object obj)
         {
-            if (obj is AABBd)
+            if (obj is AABBi)
             {
-                return Equals((AABBd)obj);
+                return Equals((AABBi)obj);
             }
 
             return false;
         }
 
-        public bool Equals(AABBd other)
+        public bool Equals(AABBi other)
         {
             return _position == other._position && _size == other._size;
         }
@@ -475,19 +426,19 @@ namespace ExtraMath
         public override string ToString()
         {
             return String.Format("{0} - {1}", new object[]
-                {
-                    _position.ToString(),
-                    _size.ToString()
-                });
+            {
+                _position.ToString(),
+                _size.ToString()
+            });
         }
 
         public string ToString(string format)
         {
             return String.Format("{0} - {1}", new object[]
-                {
-                    _position.ToString(format),
-                    _size.ToString(format)
-                });
+            {
+                _position.ToString(format),
+                _size.ToString(format)
+            });
         }
     }
 }

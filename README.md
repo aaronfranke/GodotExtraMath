@@ -21,11 +21,6 @@ More things may be added in the future.
 To use this library, download it and place in the `addons` folder, call the folder `extra-math-cs`. Alternatively, add this repository as a submodule. Then add the following lines to your `csproj` file:
 
     <Compile Include="addons\extra-math-cs\ExtraMath\Basis25D.cs" />
-    <Compile Include="addons\extra-math-cs\ExtraMath\Transform25D.cs" />
-    <Compile Include="addons\extra-math-cs\ExtraMath\Vector2i.cs" />
-    <Compile Include="addons\extra-math-cs\ExtraMath\Vector3i.cs" />
-    <Compile Include="addons\extra-math-cs\ExtraMath\Vector4i.cs" />
-    <Compile Include="addons\extra-math-cs\ExtraMath\Vector4.cs" />
     <Compile Include="addons\extra-math-cs\ExtraMath\Double\AABBd.cs" />
     <Compile Include="addons\extra-math-cs\ExtraMath\Double\Basis25Dd.cs" />
     <Compile Include="addons\extra-math-cs\ExtraMath\Double\Basisd.cs" />
@@ -40,4 +35,11 @@ To use this library, download it and place in the `addons` folder, call the fold
     <Compile Include="addons\extra-math-cs\ExtraMath\Double\Vector2d.cs" />
     <Compile Include="addons\extra-math-cs\ExtraMath\Double\Vector3d.cs" />
     <Compile Include="addons\extra-math-cs\ExtraMath\Double\Vector4d.cs" />
+    <Compile Include="addons\extra-math-cs\ExtraMath\Integer\AABBi.cs" />
+    <Compile Include="addons\extra-math-cs\ExtraMath\Integer\Rect2i.cs" />
+    <Compile Include="addons\extra-math-cs\ExtraMath\Integer\Vector2i.cs" />
+    <Compile Include="addons\extra-math-cs\ExtraMath\Integer\Vector3i.cs" />
+    <Compile Include="addons\extra-math-cs\ExtraMath\Integer\Vector4i.cs" />
+    <Compile Include="addons\extra-math-cs\ExtraMath\Transform25D.cs" />
+    <Compile Include="addons\extra-math-cs\ExtraMath\Vector4.cs" />
 
