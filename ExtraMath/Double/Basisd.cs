@@ -221,7 +221,7 @@ namespace ExtraMath
             return orthonormalizedBasisd.Quat();
         }
 
-        internal void SetQuantScale(Quatd quat, Vector3d scale)
+        internal void SetQuatScale(Quatd quat, Vector3d scale)
         {
             SetDiagonal(scale);
             Rotate(quat);

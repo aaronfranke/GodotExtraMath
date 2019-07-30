@@ -318,21 +318,6 @@ namespace ExtraMath
             return new Vector4d(Mathd.Round(x), Mathd.Round(y), Mathd.Round(z), Mathd.Round(w));
         }
 
-        public void Set(double x, double y, double z, double w)
-        {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-            this.w = w;
-        }
-        public void Set(Vector4d v)
-        {
-            x = v.x;
-            y = v.y;
-            z = v.z;
-            w = v.w;
-        }
-
         public Vector4d Sign()
         {
             Vector4d v = this;

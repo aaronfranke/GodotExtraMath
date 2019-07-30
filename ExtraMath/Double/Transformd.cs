@@ -29,7 +29,7 @@ namespace ExtraMath
             Vector3d destinationLocation = Transformd.origin;
 
             var interpolated = new Transformd();
-            interpolated.basis.SetQuantScale(sourceRotation.Slerp(destinationRotation, c).Normalized(), sourceScale.LinearInterpolate(destinationScale, c));
+            interpolated.basis.SetQuatScale(sourceRotation.Slerp(destinationRotation, c).Normalized(), sourceScale.LinearInterpolate(destinationScale, c));
             interpolated.origin = sourceLocation.LinearInterpolate(destinationLocation, c);
 
             return interpolated;

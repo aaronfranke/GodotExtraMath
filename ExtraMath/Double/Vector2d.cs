@@ -229,17 +229,6 @@ namespace ExtraMath
             return new Vector2d(Mathd.Round(x), Mathd.Round(y));
         }
 
-        public void Set(double x, double y)
-        {
-            this.x = x;
-            this.y = y;
-        }
-        public void Set(Vector2d v)
-        {
-            x = v.x;
-            y = v.y;
-        }
-
         public Vector2d Sign()
         {
             Vector2d v = this;

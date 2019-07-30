@@ -325,21 +325,6 @@ namespace ExtraMath
             return new Vector4(Mathf.Round(x), Mathf.Round(y), Mathf.Round(z), Mathf.Round(w));
         }
 
-        public void Set(real_t x, real_t y, real_t z, real_t w)
-        {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-            this.w = w;
-        }
-        public void Set(Vector4 v)
-        {
-            x = v.x;
-            y = v.y;
-            z = v.z;
-            w = v.w;
-        }
-
         public Vector4 Sign()
         {
             Vector4 v = this;

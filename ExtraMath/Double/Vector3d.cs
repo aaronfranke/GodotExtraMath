@@ -257,19 +257,6 @@ namespace ExtraMath
             return new Basisd(axis, phi).Xform(this);
         }
 
-        public void Set(double x, double y, double z)
-        {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-        }
-        public void Set(Vector3d v)
-        {
-            x = v.x;
-            y = v.y;
-            z = v.z;
-        }
-
         public Vector3d Sign()
         {
             Vector3d v = this;

@@ -97,29 +97,6 @@ namespace ExtraMath
             return this / Length;
         }
 
-        public void Set(double x, double y, double z, double w)
-        {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-            this.w = w;
-        }
-
-        public void Set(Quatd q)
-        {
-            this = q;
-        }
-
-        public void SetAxisAngle(Vector3d axis, double angle)
-        {
-            this = new Quatd(axis, angle);
-        }
-
-        public void SetEuler(Vector3d eulerYXZ)
-        {
-            this = new Quatd(eulerYXZ);
-        }
-
         public Quatd Slerp(Quatd b, double t)
         {
             // Calculate cosine

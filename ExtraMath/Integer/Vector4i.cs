@@ -170,35 +170,6 @@ namespace ExtraMath
             return v;
         }
 
-        public void Set(real_t x, real_t y, real_t z, real_t w)
-        {
-            this.x = Mathf.RoundToInt(x);
-            this.y = Mathf.RoundToInt(y);
-            this.z = Mathf.RoundToInt(z);
-            this.w = Mathf.RoundToInt(w);
-        }
-        public void Set(int x, int y, int z, int w)
-        {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-            this.w = w;
-        }
-        public void Set(Vector4i v)
-        {
-            this.x = v.x;
-            this.y = v.y;
-            this.z = v.z;
-            this.w = v.w;
-        }
-        public void Set(Vector4 v)
-        {
-            this.x = Mathf.RoundToInt(v.x);
-            this.y = Mathf.RoundToInt(v.y);
-            this.z = Mathf.RoundToInt(v.z);
-            this.w = Mathf.RoundToInt(v.w);
-        }
-
         public Vector4i Sign()
         {
             Vector4i v = this;
