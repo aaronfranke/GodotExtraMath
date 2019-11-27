@@ -75,35 +75,6 @@ namespace ExtraMath
             return Math.Cosh(s);
         }
 
-        public static int StepDecimals(double step)
-        {
-            double[] sd = new double[] {
-                0.9999,
-                0.09999,
-                0.009999,
-                0.0009999,
-                0.00009999,
-                0.000009999,
-                0.0000009999,
-                0.00000009999,
-                0.000000009999,
-                0.0000000009999,
-                0.00000000009999,
-                0.000000000009999,
-                0.0000000000009999,
-                0.00000000000009999,
-                0.000000000000009999,
-            };
-            double abs = Mathd.Abs(step);
-            double decs = abs - (int)abs; // Strip away integer part
-            for (int i = 0; i < sd.Length; i++) {
-                if (decs >= sd[i]) {
-                    return i;
-                }
-            }
-            return 0;
-        }
-
         public static double Deg2Rad(double deg)
         {
             return deg * Deg2RadConst;
@@ -160,8 +131,15 @@ namespace ExtraMath
 
         public static bool IsEqualApprox(double a, double b)
         {
+            // Check for exact equality first, required to handle "infinity" values.
+            if (a == b)
+            {
+                return true;
+            }
+            // Then check for approximate equality.
             double tolerance = Epsilon * Abs(a);
-            if (tolerance < Epsilon) {
+            if (tolerance < Epsilon)
+            {
                 tolerance = Epsilon;
             }
             return Abs(a - b) < tolerance;
@@ -185,6 +163,13 @@ namespace ExtraMath
         public static double Lerp(double from, double to, double weight)
         {
             return from + (to - from) * weight;
+        }
+
+        public static double LerpAngle(double from, double to, double weight)
+        {
+            double difference = (to - from) % Mathf.Tau;
+            double distance = ((2 * difference) % Mathf.Tau) - difference;
+            return from + distance * weight;
         }
 
         public static double Log(double s)
@@ -298,6 +283,37 @@ namespace ExtraMath
             }
             double x = Clamp((weight - from) / (to - from), 0.0, 1.0);
             return x * x * (3 - 2 * x);
+        }
+
+        public static int StepDecimals(double step)
+        {
+            double[] sd = new double[] {
+                0.9999,
+                0.09999,
+                0.009999,
+                0.0009999,
+                0.00009999,
+                0.000009999,
+                0.0000009999,
+                0.00000009999,
+                0.000000009999,
+                0.0000000009999,
+                0.00000000009999,
+                0.000000000009999,
+                0.0000000000009999,
+                0.00000000000009999,
+                0.000000000000009999,
+            };
+            double abs = Mathd.Abs(step);
+            double decs = abs - (int)abs; // Strip away integer part
+            for (int i = 0; i < sd.Length; i++)
+            {
+                if (decs >= sd[i])
+                {
+                    return i;
+                }
+            }
+            return 0;
         }
 
         public static double Sqrt(double s)

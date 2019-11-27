@@ -52,6 +52,12 @@ namespace ExtraMath
 
         public static bool IsEqualApprox(double a, double b, double tolerance)
         {
+            // Check for exact equality first, required to handle "infinity" values.
+            if (a == b)
+            {
+                return true;
+            }
+            // Then check for approximate equality.
             return Abs(a - b) < tolerance;
         }
     }
