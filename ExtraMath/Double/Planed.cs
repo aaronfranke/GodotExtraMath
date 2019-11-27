@@ -83,12 +83,12 @@ namespace ExtraMath
             return Mathd.Abs(dist) <= epsilon;
         }
 
-        public Vector3d Intersect3(Planed b, Planed c)
+        public Vector3d? Intersect3(Planed b, Planed c)
         {
             double denom = _normal.Cross(b._normal).Dot(c._normal);
 
-            if (Mathd.Abs(denom) <= Mathd.Epsilon)
-                return new Vector3d();
+            if (Mathd.IsZeroApprox(denom))
+                return null;
 
             Vector3d result = b._normal.Cross(c._normal) * D +
                                 c._normal.Cross(_normal) * b.D +
@@ -97,34 +97,35 @@ namespace ExtraMath
             return result / denom;
         }
 
-        public Vector3d IntersectRay(Vector3d from, Vector3d dir)
+        public Vector3d? IntersectRay(Vector3d from, Vector3d dir)
         {
             double den = _normal.Dot(dir);
 
-            if (Mathd.Abs(den) <= Mathd.Epsilon)
-                return new Vector3d();
+            if (Mathd.IsZeroApprox(den))
+                return null;
 
             double dist = (_normal.Dot(from) - D) / den;
 
             // This is a ray, before the emitting pos (from) does not exist
             if (dist > Mathd.Epsilon)
-                return new Vector3d();
+                return null;
 
             return from + dir * -dist;
         }
 
-        public Vector3d IntersectSegment(Vector3d begin, Vector3d end)
+        public Vector3d? IntersectSegment(Vector3d begin, Vector3d end)
         {
             Vector3d segment = begin - end;
             double den = _normal.Dot(segment);
 
-            if (Mathd.Abs(den) <= Mathd.Epsilon)
-                return new Vector3d();
+            if (Mathd.IsZeroApprox(den))
+                return null;
 
             double dist = (_normal.Dot(begin) - D) / den;
 
+            // Only allow dist to be in the range of 0 to 1, with tolerance.
             if (dist < -Mathd.Epsilon || dist > 1.0f + Mathd.Epsilon)
-                return new Vector3d();
+                return null;
 
             return begin + segment * -dist;
         }
