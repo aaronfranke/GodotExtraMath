@@ -191,6 +191,24 @@ namespace ExtraMath
             return res;
         }
 
+        public Axis MaxAxis()
+        {
+            return x < y ? Axis.Y : Axis.X;
+        }
+
+        public Axis MinAxis()
+        {
+            return x < y ? Axis.X : Axis.Y;
+        }
+
+        public Vector2d MoveToward(Vector2d to, double delta)
+        {
+            Vector2d v = this;
+            Vector2d vd = to - v;
+            double len = vd.Length();
+            return len <= delta || len < Mathd.Epsilon ? to : v + vd / len * delta;
+        }
+
         public Vector2d Normalized()
         {
             var v = this;

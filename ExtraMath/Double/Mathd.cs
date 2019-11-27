@@ -197,6 +197,11 @@ namespace ExtraMath
             return a < b ? a : b;
         }
 
+        public static double MoveToward(double from, double to, double delta)
+        {
+            return Abs(to - from) <= delta ? to : from + Sign(to - from) * delta;
+        }
+
         public static int NearestPo2(int value)
         {
             value--;

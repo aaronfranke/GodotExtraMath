@@ -108,7 +108,7 @@ namespace ExtraMath
 
         public Axis MinAxis()
         {
-            return x > y ? Axis.Y : Axis.X;
+            return x < y ? Axis.X : Axis.Y;
         }
 
         public Vector2i PosMod(int mod)

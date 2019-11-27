@@ -199,6 +199,14 @@ namespace ExtraMath
             return x < y ? (x < z ? Axis.X : Axis.Z) : (y < z ? Axis.Y : Axis.Z);
         }
 
+        public Vector3d MoveToward(Vector3d to, double delta)
+        {
+            Vector3d v = this;
+            Vector3d vd = to - v;
+            double len = vd.Length();
+            return len <= delta || len < Mathd.Epsilon ? to : v + vd / len * delta;
+        }
+
         public Vector3d Normalized()
         {
             var v = this;
