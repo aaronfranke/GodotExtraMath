@@ -17,6 +17,14 @@ namespace ExtraMath
         public const double Epsilon = 1e-06f;
 #endif
 
+        public static double Acosh(double x)
+        {
+#if DEBUG
+            if (x < 1.0) throw new ArgumentOutOfRangeException("Acosh failure: " + x + " is less than one.");
+#endif
+            return Math.Log(x + Math.Sqrt(x * x - 1.0));
+        }
+
         public static int DecimalCount(double s)
         {
             return DecimalCount((decimal)s);

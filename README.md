@@ -6,15 +6,15 @@ Based on Godot's own C# math types, which can be found here: https://github.com/
 
 This library adds the following:
 
-* `Vector4` type for various purposes.
+-   `Vector4` type for various purposes.
 
-* Integer vector types `Vector2i`, `Vector3i`, and `Vector4i`.
+-   Integer vector types `Vector2i`, `Vector3i`, and `Vector4i`.
 
-* 2.5D types `Basis25D` and `Transform25D` for 2.5D games.
+-   2.5D types `Basis25D` and `Transform25D` for 2.5D games.
 
-* Double-precision versions of all floating-point types.
+-   Double-precision versions of all floating-point types.
 
-* `Mathd` static class that mirrors `Mathf` but with doubles.
+-   `Mathd` static class that mirrors `Mathf` but with doubles.
 
 More things may be added in the future.
 
@@ -42,4 +42,3 @@ To use this library, download it and place in the `addons` folder, call the fold
     <Compile Include="addons\extra-math-cs\ExtraMath\Integer\Vector4i.cs" />
     <Compile Include="addons\extra-math-cs\ExtraMath\Transform25D.cs" />
     <Compile Include="addons\extra-math-cs\ExtraMath\Vector4.cs" />
-

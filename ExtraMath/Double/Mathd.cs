@@ -155,7 +155,7 @@ namespace ExtraMath
 
         public static double InverseLerp(double from, double to, double weight)
         {
-           return (weight - from) / (to - from);
+            return (weight - from) / (to - from);
         }
 
         public static bool IsEqualApprox(double a, double b)
@@ -169,12 +169,12 @@ namespace ExtraMath
 
         public static bool IsInf(double s)
         {
-           return double.IsInfinity(s);
+            return double.IsInfinity(s);
         }
 
         public static bool IsNaN(double s)
         {
-           return double.IsNaN(s);
+            return double.IsNaN(s);
         }
 
         public static bool IsZeroApprox(double s)
