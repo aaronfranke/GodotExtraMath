@@ -16,6 +16,12 @@ namespace ExtraMath
     [StructLayout(LayoutKind.Sequential)]
     public struct Vector2d : IEquatable<Vector2d>
     {
+        public enum Axis
+        {
+            X = 0,
+            Y
+        }
+
         public double x;
         public double y;
 

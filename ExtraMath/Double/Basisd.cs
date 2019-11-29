@@ -7,40 +7,6 @@ namespace ExtraMath
     [StructLayout(LayoutKind.Sequential)]
     public struct Basisd : IEquatable<Basisd>
     {
-        private static readonly Basisd identity = new Basisd
-        (
-            1, 0, 0,
-            0, 1, 0,
-            0, 0, 1
-        );
-
-        private static readonly Basisd[] orthoBases = {
-            new Basisd(1, 0, 0, 0, 1, 0, 0, 0, 1),
-            new Basisd(0, -1, 0, 1, 0, 0, 0, 0, 1),
-            new Basisd(-1, 0, 0, 0, -1, 0, 0, 0, 1),
-            new Basisd(0, 1, 0, -1, 0, 0, 0, 0, 1),
-            new Basisd(1, 0, 0, 0, 0, -1, 0, 1, 0),
-            new Basisd(0, 0, 1, 1, 0, 0, 0, 1, 0),
-            new Basisd(-1, 0, 0, 0, 0, 1, 0, 1, 0),
-            new Basisd(0, 0, -1, -1, 0, 0, 0, 1, 0),
-            new Basisd(1, 0, 0, 0, -1, 0, 0, 0, -1),
-            new Basisd(0, 1, 0, 1, 0, 0, 0, 0, -1),
-            new Basisd(-1, 0, 0, 0, 1, 0, 0, 0, -1),
-            new Basisd(0, -1, 0, -1, 0, 0, 0, 0, -1),
-            new Basisd(1, 0, 0, 0, 0, 1, 0, -1, 0),
-            new Basisd(0, 0, -1, 1, 0, 0, 0, -1, 0),
-            new Basisd(-1, 0, 0, 0, 0, -1, 0, -1, 0),
-            new Basisd(0, 0, 1, -1, 0, 0, 0, -1, 0),
-            new Basisd(0, 0, 1, 0, 1, 0, -1, 0, 0),
-            new Basisd(0, -1, 0, 0, 0, 1, -1, 0, 0),
-            new Basisd(0, 0, -1, 0, -1, 0, -1, 0, 0),
-            new Basisd(0, 1, 0, 0, 0, -1, -1, 0, 0),
-            new Basisd(0, 0, 1, 0, -1, 0, 1, 0, 0),
-            new Basisd(0, 1, 0, 0, 0, 1, 1, 0, 0),
-            new Basisd(0, 0, -1, 0, 1, 0, 1, 0, 0),
-            new Basisd(0, -1, 0, 0, 0, -1, 1, 0, 0)
-        };
-
         // NOTE: x, y and z are public-only. Use Column0, Column1 and Column2 internally.
 
         /// <summary>
@@ -59,7 +25,6 @@ namespace ExtraMath
         /// </summary>
         public Vector3d y
         {
-
             get => Column1;
             set => Column1 = value;
         }
@@ -70,7 +35,6 @@ namespace ExtraMath
         /// </summary>
         public Vector3d z
         {
-
             get => Column2;
             set => Column2 = value;
         }
@@ -109,8 +73,6 @@ namespace ExtraMath
                 this.Row2.z = value.z;
             }
         }
-
-        public static Basisd Identity => identity;
 
         public Vector3d Scale
         {
@@ -357,8 +319,10 @@ namespace ExtraMath
 
             for (int i = 0; i < 24; i++)
             {
-                if (orthoBases[i] == orth)
+                if (orth == _orthoBases[i])
+                {
                     return i;
+                }
             }
 
             return 0;
@@ -531,6 +495,43 @@ namespace ExtraMath
                 );
             }
         }
+
+        private static readonly Basisd[] _orthoBases = {
+            new Basisd(1, 0, 0, 0, 1, 0, 0, 0, 1),
+            new Basisd(0, -1, 0, 1, 0, 0, 0, 0, 1),
+            new Basisd(-1, 0, 0, 0, -1, 0, 0, 0, 1),
+            new Basisd(0, 1, 0, -1, 0, 0, 0, 0, 1),
+            new Basisd(1, 0, 0, 0, 0, -1, 0, 1, 0),
+            new Basisd(0, 0, 1, 1, 0, 0, 0, 1, 0),
+            new Basisd(-1, 0, 0, 0, 0, 1, 0, 1, 0),
+            new Basisd(0, 0, -1, -1, 0, 0, 0, 1, 0),
+            new Basisd(1, 0, 0, 0, -1, 0, 0, 0, -1),
+            new Basisd(0, 1, 0, 1, 0, 0, 0, 0, -1),
+            new Basisd(-1, 0, 0, 0, 1, 0, 0, 0, -1),
+            new Basisd(0, -1, 0, -1, 0, 0, 0, 0, -1),
+            new Basisd(1, 0, 0, 0, 0, 1, 0, -1, 0),
+            new Basisd(0, 0, -1, 1, 0, 0, 0, -1, 0),
+            new Basisd(-1, 0, 0, 0, 0, -1, 0, -1, 0),
+            new Basisd(0, 0, 1, -1, 0, 0, 0, -1, 0),
+            new Basisd(0, 0, 1, 0, 1, 0, -1, 0, 0),
+            new Basisd(0, -1, 0, 0, 0, 1, -1, 0, 0),
+            new Basisd(0, 0, -1, 0, -1, 0, -1, 0, 0),
+            new Basisd(0, 1, 0, 0, 0, -1, -1, 0, 0),
+            new Basisd(0, 0, 1, 0, -1, 0, 1, 0, 0),
+            new Basisd(0, 1, 0, 0, 0, 1, 1, 0, 0),
+            new Basisd(0, 0, -1, 0, 1, 0, 1, 0, 0),
+            new Basisd(0, -1, 0, 0, 0, -1, 1, 0, 0)
+        };
+
+        private static readonly Basisd _identity = new Basisd(1, 0, 0, 0, 1, 0, 0, 0, 1);
+        private static readonly Basisd _flipX = new Basisd(-1, 0, 0, 0, 1, 0, 0, 0, 1);
+        private static readonly Basisd _flipY = new Basisd(1, 0, 0, 0, -1, 0, 0, 0, 1);
+        private static readonly Basisd _flipZ = new Basisd(1, 0, 0, 0, 1, 0, 0, 0, -1);
+
+        public static Basisd Identity { get { return _identity; } }
+        public static Basisd FlipX { get { return _flipX; } }
+        public static Basisd FlipY { get { return _flipY; } }
+        public static Basisd FlipZ { get { return _flipZ; } }
 
         public Basisd(Quatd quat)
         {

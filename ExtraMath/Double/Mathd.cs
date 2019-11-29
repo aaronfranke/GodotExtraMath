@@ -167,8 +167,8 @@ namespace ExtraMath
 
         public static double LerpAngle(double from, double to, double weight)
         {
-            double difference = (to - from) % Mathf.Tau;
-            double distance = ((2 * difference) % Mathf.Tau) - difference;
+            double difference = (to - from) % Mathd.Tau;
+            double distance = ((2 * difference) % Mathd.Tau) - difference;
             return from + distance * weight;
         }
 
