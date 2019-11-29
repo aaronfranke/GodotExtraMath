@@ -10,6 +10,109 @@ namespace ExtraMath
         public Basisd basis;
         public Vector3d origin;
 
+        /// <summary>
+        /// Access whole columns in the form of Vector3. The fourth column is the origin vector.
+        /// </summary>
+        /// <param name="column">Which column vector.</param>
+        public Vector3d this[int column]
+        {
+            get
+            {
+                switch (column)
+                {
+                    case 0:
+                        return basis.Column0;
+                    case 1:
+                        return basis.Column1;
+                    case 2:
+                        return basis.Column2;
+                    case 3:
+                        return origin;
+                    default:
+                        throw new IndexOutOfRangeException();
+                }
+            }
+            set
+            {
+                switch (column)
+                {
+                    case 0:
+                        basis.Column0 = value;
+                        return;
+                    case 1:
+                        basis.Column1 = value;
+                        return;
+                    case 2:
+                        basis.Column2 = value;
+                        return;
+                    case 3:
+                        origin = value;
+                        return;
+                    default:
+                        throw new IndexOutOfRangeException();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Access matrix elements in column-major order. The fourth column is the origin vector.
+        /// </summary>
+        /// <param name="column">Which column, the matrix horizontal position.</param>
+        /// <param name="row">Which row, the matrix vertical position.</param>
+        public double this[int column, int row]
+        {
+            get
+            {
+                switch (column)
+                {
+                    case 0:
+                        return basis.Column0[row];
+                    case 1:
+                        return basis.Column1[row];
+                    case 2:
+                        return basis.Column2[row];
+                    case 3:
+                        return origin[row];
+                    default:
+                        throw new IndexOutOfRangeException();
+                }
+            }
+            set
+            {
+                switch (column)
+                {
+                    case 0:
+                    {
+                        var column0 = basis.Column0;
+                        column0[row] = value;
+                        basis.Column0 = column0;
+                        return;
+                    }
+                    case 1:
+                    {
+                        var column1 = basis.Column1;
+                        column1[row] = value;
+                        basis.Column1 = column1;
+                        return;
+                    }
+                    case 2:
+                    {
+                        var column2 = basis.Column2;
+                        column2[row] = value;
+                        basis.Column2 = column2;
+                        return;
+                    }
+                    case 3:
+                    {
+                        origin[row] = value;
+                        return;
+                    }
+                    default:
+                        throw new IndexOutOfRangeException();
+                }
+            }
+        }
+
         public Transformd AffineInverse()
         {
             Basisd basisInv = basis.Inverse();

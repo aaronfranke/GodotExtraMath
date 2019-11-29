@@ -42,18 +42,21 @@ namespace ExtraMath
             }
             set
             {
-                x = x.Normalized();
-                y = y.Normalized();
+                value /= Scale; // Value becomes what's called "delta_scale" in core.
                 x *= value.x;
                 y *= value.y;
             }
         }
 
-        public Vector2d this[int rowIndex]
+        /// <summary>
+        /// Access whole columns in the form of Vector2. The third column is the origin vector.
+        /// </summary>
+        /// <param name="column">Which column vector.</param>
+        public Vector2d this[int column]
         {
             get
             {
-                switch (rowIndex)
+                switch (column)
                 {
                     case 0:
                         return x;
@@ -67,7 +70,7 @@ namespace ExtraMath
             }
             set
             {
-                switch (rowIndex)
+                switch (column)
                 {
                     case 0:
                         x = value;
@@ -84,29 +87,39 @@ namespace ExtraMath
             }
         }
 
-        public double this[int rowIndex, int columnIndex]
+        /// <summary>
+        /// Access matrix elements in column-major order. The third column is the origin vector.
+        /// </summary>
+        /// <param name="column">Which column, the matrix horizontal position.</param>
+        /// <param name="row">Which row, the matrix vertical position.</param>
+        public double this[int column, int row]
         {
             get
             {
-                switch (rowIndex)
+                switch (column)
                 {
                     case 0:
-                        return x[columnIndex];
+                        return x[row];
                     case 1:
-                        return y[columnIndex];
+                        return y[row];
+                    case 2:
+                        return origin[row];
                     default:
                         throw new IndexOutOfRangeException();
                 }
             }
             set
             {
-                switch (rowIndex)
+                switch (column)
                 {
                     case 0:
-                        x[columnIndex] = value;
+                        x[row] = value;
                         return;
                     case 1:
-                        y[columnIndex] = value;
+                        y[row] = value;
+                        return;
+                    case 2:
+                        origin[row] = value;
                         return;
                     default:
                         throw new IndexOutOfRangeException();

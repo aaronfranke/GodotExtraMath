@@ -81,18 +81,30 @@ namespace ExtraMath
                 double detSign = Mathd.Sign(Determinant());
                 return detSign * new Vector3d
                 (
-                    new Vector3d(this.Row0[0], this.Row1[0], this.Row2[0]).Length(),
-                    new Vector3d(this.Row0[1], this.Row1[1], this.Row2[1]).Length(),
-                    new Vector3d(this.Row0[2], this.Row1[2], this.Row2[2]).Length()
+                    Column0.Length(),
+                    Column1.Length(),
+                    Column2.Length()
                 );
+            }
+            set
+            {
+                value /= Scale; // Value becomes what's called "delta_scale" in core.
+                Column0 *= value.x;
+                Column1 *= value.y;
+                Column2 *= value.z;
             }
         }
 
-        public Vector3d this[int columnIndex]
+        /// <summary>
+        /// Access matrix elements in column-major order.
+        /// </summary>
+        /// <param name="column">Which column, the matrix horizontal position.</param>
+        /// <param name="row">Which row, the matrix vertical position.</param>
+        public Vector3d this[int column]
         {
             get
             {
-                switch (columnIndex)
+                switch (column)
                 {
                     case 0:
                         return Column0;
@@ -106,7 +118,7 @@ namespace ExtraMath
             }
             set
             {
-                switch (columnIndex)
+                switch (column)
                 {
                     case 0:
                         Column0 = value;
@@ -123,44 +135,49 @@ namespace ExtraMath
             }
         }
 
-        public double this[int columnIndex, int rowIndex]
+        /// <summary>
+        /// Access matrix elements, in column-major order.
+        /// </summary>
+        /// <param name="column">The column.</param>
+        /// <param name="row">The row.</param>
+        public double this[int column, int row]
         {
             get
             {
-                switch (columnIndex)
+                switch (column)
                 {
                     case 0:
-                        return Column0[rowIndex];
+                        return Column0[row];
                     case 1:
-                        return Column1[rowIndex];
+                        return Column1[row];
                     case 2:
-                        return Column2[rowIndex];
+                        return Column2[row];
                     default:
                         throw new IndexOutOfRangeException();
                 }
             }
             set
             {
-                switch (columnIndex)
+                switch (column)
                 {
                     case 0:
                     {
                         var column0 = Column0;
-                        column0[rowIndex] = value;
+                        column0[row] = value;
                         Column0 = column0;
                         return;
                     }
                     case 1:
                     {
                         var column1 = Column1;
-                        column1[rowIndex] = value;
+                        column1[row] = value;
                         Column1 = column1;
                         return;
                     }
                     case 2:
                     {
                         var column2 = Column2;
-                        column2[rowIndex] = value;
+                        column2[row] = value;
                         Column2 = column2;
                         return;
                     }
