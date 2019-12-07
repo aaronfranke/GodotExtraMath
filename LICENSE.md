@@ -1,6 +1,6 @@
-MIT License
+## MIT License
 
-Copyright (c) 2019 Aaron Franke
+Copyright &copy; 2019 Aaron Franke, Godot Engine contributors ([cf.](https://github.com/godotengine/godot/commits/master/modules/mono/glue/Managed/Files) `git shortlog -n -s -- modules/mono/glue/Managed/Files`).
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
