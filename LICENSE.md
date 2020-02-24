@@ -1,6 +1,12 @@
 ## MIT License
 
-Copyright &copy; 2019 Aaron Franke, Godot Engine contributors ([cf.](https://github.com/godotengine/godot/commits/master/modules/mono/glue/Managed/Files) `git shortlog -n -s -- modules/mono/glue/Managed/Files`).
+Copyright &copy; 2019-2020 Aaron Franke, Godot Engine contributors (cf. GodotSharp authors as per instructions).
+
+* To see authors, run these commands in a clone of [the Godot repo](https://github.com/godotengine/godot) (a ZIP download does **not** work):
+
+  * `git shortlog -n -s -- modules/mono/glue/GodotSharp/GodotSharp/Core` (or [view in browser](https://github.com/godotengine/godot/commits/master/modules/mono/glue/GodotSharp/GodotSharp/Core))
+  * `git shortlog -n -s -- modules/mono/glue/Managed/Files` (or [view in browser](https://github.com/godotengine/godot/commits/master/modules/mono/glue/Managed/Files))
+  * `git shortlog -n -s -- modules/mono/glue/cs_files` (or [view in browser](https://github.com/godotengine/godot/commits/master/modules/mono/glue/cs_files))
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
