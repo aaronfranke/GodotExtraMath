@@ -63,53 +63,20 @@ namespace ExtraMath
         {
             get
             {
-                switch (column)
+                if (column == 3)
                 {
-                    case 0:
-                        return basis.Column0[row];
-                    case 1:
-                        return basis.Column1[row];
-                    case 2:
-                        return basis.Column2[row];
-                    case 3:
-                        return origin[row];
-                    default:
-                        throw new IndexOutOfRangeException();
+                    return origin[row];
                 }
+                return basis[column, row];
             }
             set
             {
-                switch (column)
+                if (column == 3)
                 {
-                    case 0:
-                    {
-                        var column0 = basis.Column0;
-                        column0[row] = value;
-                        basis.Column0 = column0;
-                        return;
-                    }
-                    case 1:
-                    {
-                        var column1 = basis.Column1;
-                        column1[row] = value;
-                        basis.Column1 = column1;
-                        return;
-                    }
-                    case 2:
-                    {
-                        var column2 = basis.Column2;
-                        column2[row] = value;
-                        basis.Column2 = column2;
-                        return;
-                    }
-                    case 3:
-                    {
-                        origin[row] = value;
-                        return;
-                    }
-                    default:
-                        throw new IndexOutOfRangeException();
+                    origin[row] = value;
+                    return;
                 }
+                basis[column, row] = value;
             }
         }
 
@@ -124,11 +91,11 @@ namespace ExtraMath
             /* not sure if very "efficient" but good enough? */
 
             Vector3d sourceScale = basis.Scale;
-            Quatd sourceRotation = basis.RotationQuatd();
+            Quatd sourceRotation = basis.RotationQuat();
             Vector3d sourceLocation = origin;
 
             Vector3d destinationScale = Transformd.basis.Scale;
-            Quatd destinationRotation = Transformd.basis.RotationQuatd();
+            Quatd destinationRotation = Transformd.basis.RotationQuat();
             Vector3d destinationLocation = Transformd.origin;
 
             var interpolated = new Transformd();

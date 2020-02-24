@@ -222,9 +222,9 @@ namespace ExtraMath
         /// <summary>
         /// Performs a canonical Modulus operation, where the output is on the range [0, b).
         /// </summary>
-        public static double PosMod(double a, double b)
+        public static int PosMod(int a, int b)
         {
-            double c = a % b;
+            int c = a % b;
             if ((c < 0 && b > 0) || (c > 0 && b < 0))
             {
                 c += b;
@@ -235,9 +235,9 @@ namespace ExtraMath
         /// <summary>
         /// Performs a canonical Modulus operation, where the output is on the range [0, b).
         /// </summary>
-        public static int PosMod(int a, int b)
+        public static double PosMod(double a, double b)
         {
-            int c = a % b;
+            double c = a % b;
             if ((c < 0 && b > 0) || (c > 0 && b < 0))
             {
                 c += b;
@@ -262,12 +262,14 @@ namespace ExtraMath
 
         public static int Sign(int s)
         {
+            if (s == 0) return 0;
             return s < 0 ? -1 : 1;
         }
 
-        public static double Sign(double s)
+        public static int Sign(double s)
         {
-            return s < 0f ? -1f : 1f;
+            if (s == 0) return 0;
+            return s < 0 ? -1 : 1;
         }
 
         public static double Sin(double s)

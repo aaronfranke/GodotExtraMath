@@ -83,12 +83,20 @@ namespace ExtraMath
 
         public Vector3d GetEuler()
         {
+#if DEBUG
+            if (!IsNormalized())
+                throw new InvalidOperationException("Quat is not normalized");
+#endif
             var basis = new Basisd(this);
             return basis.GetEuler();
         }
 
         public Quatd Inverse()
         {
+#if DEBUG
+            if (!IsNormalized())
+                throw new InvalidOperationException("Quat is not normalized");
+#endif
             return new Quatd(-x, -y, -z, w);
         }
 
@@ -99,6 +107,12 @@ namespace ExtraMath
 
         public Quatd Slerp(Quatd b, double t)
         {
+#if DEBUG
+            if (!IsNormalized())
+                throw new InvalidOperationException("Quat is not normalized");
+            if (!b.IsNormalized())
+                throw new ArgumentException("Argument is not normalized", nameof(b));
+#endif
             // Calculate cosine
             double cosom = x * b.x + y * b.y + z * b.z + w * b.w;
 
@@ -174,9 +188,13 @@ namespace ExtraMath
 
         public Vector3d Xform(Vector3d v)
         {
-            Quatd q = this * v;
-            q *= Inverse();
-            return new Vector3d(q.x, q.y, q.z);
+#if DEBUG
+            if (!IsNormalized())
+                throw new InvalidOperationException("Quat is not normalized");
+#endif
+            var u = new Vector3d(x, y, z);
+            Vector3d uv = u.Cross(v);
+            return v + ((uv * w) + u.Cross(uv)) * 2;
         }
 
         // Static Readonly Properties
@@ -231,6 +249,10 @@ namespace ExtraMath
 
         public Quatd(Vector3d axis, double angle)
         {
+#if DEBUG
+            if (!axis.IsNormalized())
+                throw new ArgumentException("Argument is not normalized", nameof(axis));
+#endif
             double d = axis.Length();
             double angle_t = angle;
 
@@ -243,12 +265,14 @@ namespace ExtraMath
             }
             else
             {
-                double s = Mathd.Sin(angle_t * 0.5f) / d;
+                double sinAngle = Mathd.Sin(angle * 0.5);
+                double cosAngle = Mathd.Cos(angle * 0.5);
+                double s = sinAngle / d;
 
                 x = axis.x * s;
                 y = axis.y * s;
                 z = axis.z * s;
-                w = Mathd.Cos(angle_t * 0.5f);
+                w = cosAngle;
             }
         }
 

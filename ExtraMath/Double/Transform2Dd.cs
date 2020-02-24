@@ -96,34 +96,13 @@ namespace ExtraMath
         {
             get
             {
-                switch (column)
-                {
-                    case 0:
-                        return x[row];
-                    case 1:
-                        return y[row];
-                    case 2:
-                        return origin[row];
-                    default:
-                        throw new IndexOutOfRangeException();
-                }
+                return this[column][row];
             }
             set
             {
-                switch (column)
-                {
-                    case 0:
-                        x[row] = value;
-                        return;
-                    case 1:
-                        y[row] = value;
-                        return;
-                    case 2:
-                        origin[row] = value;
-                        return;
-                    default:
-                        throw new IndexOutOfRangeException();
-                }
+                Vector2d columnVector = this[column];
+                columnVector[row] = value;
+                this[column] = columnVector;
             }
         }
 

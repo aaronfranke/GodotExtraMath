@@ -144,50 +144,17 @@ namespace ExtraMath
         {
             get
             {
-                switch (column)
-                {
-                    case 0:
-                        return Column0[row];
-                    case 1:
-                        return Column1[row];
-                    case 2:
-                        return Column2[row];
-                    default:
-                        throw new IndexOutOfRangeException();
-                }
+                return this[column][row];
             }
             set
             {
-                switch (column)
-                {
-                    case 0:
-                    {
-                        var column0 = Column0;
-                        column0[row] = value;
-                        Column0 = column0;
-                        return;
-                    }
-                    case 1:
-                    {
-                        var column1 = Column1;
-                        column1[row] = value;
-                        Column1 = column1;
-                        return;
-                    }
-                    case 2:
-                    {
-                        var column2 = Column2;
-                        column2[row] = value;
-                        Column2 = column2;
-                        return;
-                    }
-                    default:
-                        throw new IndexOutOfRangeException();
-                }
+                Vector3d columnVector = this[column];
+                columnVector[row] = value;
+                this[column] = columnVector;
             }
         }
 
-        internal Quatd RotationQuatd()
+        internal Quatd RotationQuat()
         {
             Basisd orthonormalizedBasisd = Orthonormalized();
             double det = orthonormalizedBasisd.Determinant();
@@ -303,12 +270,6 @@ namespace ExtraMath
             this[index] = value;
         }
 
-        [Obsolete("GetAxis is deprecated. Use GetColumn instead.")]
-        public Vector3d GetAxis(int axis)
-        {
-            return new Vector3d(this.Row0[axis], this.Row1[axis], this.Row2[axis]);
-        }
-
         public int GetOrthogonalIndex()
         {
             var orth = this;
@@ -404,6 +365,19 @@ namespace ExtraMath
             b.Row0 *= scale.x;
             b.Row1 *= scale.y;
             b.Row2 *= scale.z;
+            return b;
+        }
+
+        public Basisd Slerp(Basisd target, double t)
+        {
+            var from = new Quatd(this);
+            var to = new Quatd(target);
+
+            var b = new Basisd(from.Slerp(to, t));
+            b.Row0 *= Mathd.Lerp(Row0.Length(), target.Row0.Length(), t);
+            b.Row1 *= Mathd.Lerp(Row1.Length(), target.Row1.Length(), t);
+            b.Row2 *= Mathd.Lerp(Row2.Length(), target.Row2.Length(), t);
+
             return b;
         }
 
